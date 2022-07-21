@@ -25,7 +25,7 @@ cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
 cornerstoneTools.init();
 
 cornerstoneTools.init({
-  mouseEnabled: false,
+  mouseEnabled: true,
   touchEnabled: true,
   globalToolSyncEnabled: false,
   showSVGCursors: false
