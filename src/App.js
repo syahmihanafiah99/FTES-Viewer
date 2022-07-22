@@ -47,16 +47,16 @@ window.onload = function() {
   downloadAndView("http://10.40.1.54/instances/ac387d6b-f6d27580-86652c3e-92699397-9dbafed6/file");
 };
 
-cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+// cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
-cornerstoneWADOImageLoader.configure({
-  beforeSend: function(xhr) {
-      // Add custom headers here (e.g. auth tokens)
-      //xhr.setRequestHeader('APIKEY', 'my auth token');
-  },
-});
+// cornerstoneWADOImageLoader.configure({
+//   beforeSend: function(xhr) {
+//       // Add custom headers here (e.g. auth tokens)
+//       //xhr.setRequestHeader('APIKEY', 'my auth token');
+//   },
+// });
 
-var loaded = false;
+// var loaded = false;
 
 function loadAndViewImage(imageId) {
   var element = document.getElementById('dicomImage');
@@ -90,23 +90,23 @@ function downloadAndView(downloadUrl) {
   loadAndViewImage(url);
 }
 
-cornerstone.events.addEventListener('cornerstoneimageloadprogress', function(event) {
-  const eventData = event.detail;
-  const loadProgress = document.getElementById('loadProgress');
-  loadProgress.textContent = `Image Load Progress: ${eventData.percentComplete}%`;
-});
+// cornerstone.events.addEventListener('cornerstoneimageloadprogress', function(event) {
+//   const eventData = event.detail;
+//   const loadProgress = document.getElementById('loadProgress');
+//   loadProgress.textContent = `Image Load Progress: ${eventData.percentComplete}%`;
+// });
 
-function getUrlWithoutFrame() {
-  var url = document.getElementById('wadoURL').value;
-  var frameIndex = url.indexOf('frame=');
-  if(frameIndex !== -1) {
-      url = url.substr(0, frameIndex-1);
-  }
-  return url;
-}
+// function getUrlWithoutFrame() {
+//   var url = document.getElementById('wadoURL').value;
+//   var frameIndex = url.indexOf('frame=');
+//   if(frameIndex !== -1) {
+//       url = url.substr(0, frameIndex-1);
+//   }
+//   return url;
+// }
 
 var element = document.getElementById('dicomImage');
-cornerstone.enable(element);
+// cornerstone.enable(element);
    
 const App = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
