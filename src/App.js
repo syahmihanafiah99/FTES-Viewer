@@ -41,10 +41,8 @@ cornerstoneTools.toolStyle.setToolWidth(2);
 // Set color for inactive tools
 cornerstoneTools.toolColors.setToolColor("rgb(255, 255, 0)");
 
-// window.onload = function() {
-//   downloadAndView("http://10.40.1.54/instances/ac387d6b-f6d27580-86652c3e-92699397-9dbafed6/file");
-// }; 
-//integrate with previous django coding
+//Integrate with django coding
+
 window.onload = function() {
   downloadAndView("http://10.40.1.54/instances/ac387d6b-f6d27580-86652c3e-92699397-9dbafed6/file");
 };
