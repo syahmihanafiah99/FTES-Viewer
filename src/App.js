@@ -41,42 +41,47 @@ cornerstoneTools.toolStyle.setToolWidth(2);
 // Set color for inactive tools
 cornerstoneTools.toolColors.setToolColor("rgb(255, 255, 0)");
 
+// window.onload = function() {
+//   downloadAndView("http://10.40.1.54/instances/ac387d6b-f6d27580-86652c3e-92699397-9dbafed6/file");
+// }; 
+//integrate with previous django coding
+window.onload = function() {
+  downloadAndView("http://10.40.1.54/instances/ac387d6b-f6d27580-86652c3e-92699397-9dbafed6/file");
+};
 
-    // Load DICOM on siteload
-    window.onload = function() {
-      downloadAndView("http://10.40.1.54/instances/ac387d6b-f6d27580-86652c3e-92699397-9dbafed6/file");
-  };
-  
-  cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
-  cornerstoneWADOImageLoader.configure({
-      beforeSend: function(xhr) {
-          // Add custom headers here (e.g. auth tokens)
-          //xhr.setRequestHeader('APIKEY', 'my auth token');
-      },
-  });
+cornerstoneWADOImageLoader.configure({
+  beforeSend: function(xhr) {
+      // Add custom headers here (e.g. auth tokens)
+      //xhr.setRequestHeader('APIKEY', 'my auth token');
+  },
+});
 
-  var loaded = false;
+var loaded = false;
 
-  function loadAndViewImage(imageId) {
-    var element = document.getElementById('dicomImage');
+function loadAndViewImage(imageId) {
+  var element = document.getElementById('dicomImage');
 
-    try {
-        var start = new Date().getTime();
-        cornerstone.loadAndCacheImage(imageId).then(function(image) {
-            console.log(image);
-            var viewport = cornerstone.getDefaultViewportForImage(element, image);
-            cornerstone.displayImage(element, image, viewport);
+  try {
+      var start = new Date().getTime();
+      cornerstone.loadAndCacheImage(imageId).then(function(image) {
+          console.log(image);
+          var viewport = cornerstone.getDefaultViewportForImage(element, image);
+          cornerstone.displayImage(element, image, viewport);
 
 
-        }, function(err) {
-            throw err;
-        });
-    }
-    catch(err) {
-        throw err;
-    }
+
+
+      }, function(err) {
+          throw err;
+      });
+  }
+  catch(err) {
+      throw err;
+  }
 }
+
 function downloadAndView(downloadUrl) {
   let url = downloadUrl || document.getElementById('wadoURL').value;
 
@@ -104,11 +109,7 @@ function getUrlWithoutFrame() {
 
 var element = document.getElementById('dicomImage');
 cornerstone.enable(element);
-
-
-
-
-
+   
 const App = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [imageIds, setImageIds] = useState([]);
@@ -122,7 +123,7 @@ const App = () => {
   margin: 8px 0px;
   cursor: pointer;
   margin-left:200px;
-`;
+`;  
 //insert dicom image to 
   useEffect(() => {
     element = document.getElementById("dicomImage");
@@ -155,6 +156,7 @@ const App = () => {
 
 
   };
+  
   return (
     <div>
         <Button onClick={handleFileChange}>
@@ -166,6 +168,7 @@ const App = () => {
       {/* <button onClick={setMouseWheelActive} style={{ marginLeft: "10px" }}>
         Scroll
       </button> */}
+      
       <button onClick={setLengthActive} style={{ marginLeft: "10px" }}>
         Length
       </button>
@@ -185,14 +188,14 @@ const App = () => {
         
       }}
       className="dicom-wrapper">
-        {/* <div
+        <div
           onContextMenu={() => false}
           className="dicom-viewer"
 
         >
           <div id="dicomImage"
           style={{ outline: "1px solid blue", width: "512px", height:"512px",alignItems: 'center', justifyContent: 'center'}} />
-        </div> */}
+        </div>
       </div>
       <div class="container">
        <h1>&nbsp;</h1>
