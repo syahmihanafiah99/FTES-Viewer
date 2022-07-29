@@ -157,11 +157,11 @@ const App = () => {
   
   return (
     <div>
-        <Button onClick={handleFileChange}>
+        {/* <Button onClick={handleFileChange}>
         Upload a DICOM file
       </Button>
-      <input type="file" style={{marginLeft: "10px"}} onChange={handleFileChange} multiple />
-      <button  onClick={setZoomActive}>Zoom/Pan</button>
+      <input type="file" style={{marginLeft: "10px"}} onChange={handleFileChange} multiple /> */}
+      <button  onClick={setZoomActive}style={{ marginLeft: "480px" }}>Zoom/Pan</button>
       
       {/* <button onClick={setMouseWheelActive} style={{ marginLeft: "10px" }}>
         Scroll
