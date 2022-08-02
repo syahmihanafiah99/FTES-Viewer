@@ -44,7 +44,7 @@ cornerstoneTools.toolColors.setToolColor("rgb(255, 255, 0)");
 //Integrate with django coding
 
 window.onload = function() {
-  downloadAndView("http://10.40.1.54/instances/ac387d6b-f6d27580-86652c3e-92699397-9dbafed6/file");
+  downloadAndView("http://10.40.1.54/instances/af5c73c3-c1e230ee-ed806676-cfada2ac-a7b0021f/file");
 };
 
 // cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
@@ -67,10 +67,6 @@ function loadAndViewImage(imageId) {
           console.log(image);
           var viewport = cornerstone.getDefaultViewportForImage(element, image);
           cornerstone.displayImage(element, image, viewport);
-
-
-
-
       }, function(err) {
           throw err;
       });
@@ -78,6 +74,7 @@ function loadAndViewImage(imageId) {
   catch(err) {
       throw err;
   }
+  
 }
 
 function downloadAndView(downloadUrl) {
@@ -129,31 +126,31 @@ const App = () => {
   });
 
 //function for running the files
-  const handleFileChange = (e) => {
+  // const handleFileChange = (e) => {
 
-    const files = Array.from(e.target.files);
-    setUploadedFiles(files);
-    const imageIds = files.map((file) => {
-      return cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
-    });
-    setImageIds(imageIds);
-    const StackScrollMouseWheelTool =
-      cornerstoneTools.StackScrollMouseWheelTool;
-    const stack = {
-      currentImageIdIndex: 0,
-      imageIds
-    };
-    cornerstone.loadImage(imageIds[0]).then((image) => {
-      cornerstone.displayImage(element, image);
-      cornerstoneTools.addStackStateManager(element, ["stack"]);
-      cornerstoneTools.addToolState(element, "stack", stack);
-    });
-    cornerstoneTools.addTool(StackScrollMouseWheelTool);
-    cornerstoneTools.setToolActive("StackScrollMouseWheel", {});
+  //   const files = Array.from(e.target.files);
+  //   setUploadedFiles(files);
+  //   const imageIds = files.map((file) => {
+  //     return cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+  //   });
+  //   setImageIds(imageIds);
+  //   const StackScrollMouseWheelTool =
+  //     cornerstoneTools.StackScrollMouseWheelTool;
+  //   const stack = {
+  //     currentImageIdIndex: 0,
+  //     imageIds
+  //   };
+  //   cornerstone.loadImage(imageIds[0]).then((image) => {
+  //     cornerstone.displayImage(element, image);
+  //     cornerstoneTools.addStackStateManager(element, ["stack"]);
+  //     cornerstoneTools.addToolState(element, "stack", stack);
+  //   });
+  //   cornerstoneTools.addTool(StackScrollMouseWheelTool);
+  //   cornerstoneTools.setToolActive("StackScrollMouseWheel", {});
     
 
 
-  };
+  // };
   
   return (
     <div>
