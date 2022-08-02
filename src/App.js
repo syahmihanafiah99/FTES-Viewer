@@ -13,6 +13,7 @@ import Hammer from "hammerjs";
 import CornerstoneViewport from "react-cornerstone-viewport";
 import { Row, Col, Button } from "reactstrap";
 import styled from 'styled-components';
+import { uid } from 'uid';
 
 
 
@@ -44,7 +45,8 @@ cornerstoneTools.toolColors.setToolColor("rgb(255, 255, 0)");
 //Integrate with django coding
 
 window.onload = function() {
-  downloadAndView("http://10.40.1.54/instances/af5c73c3-c1e230ee-ed806676-cfada2ac-a7b0021f/file");
+  // downloadAndView("http://10.40.1.54/instances/af5c73c3-c1e230ee-ed806676-cfada2ac-a7b0021f/file");
+  downloadAndView("http://10.40.1.54/instances/a0ee2e67-a48cbb65-a9605522-1748da4c-8167f0dc/file");
 };
 
 // cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
@@ -67,6 +69,68 @@ function loadAndViewImage(imageId) {
           console.log(image);
           var viewport = cornerstone.getDefaultViewportForImage(element, image);
           cornerstone.displayImage(element, image, viewport);
+
+          function getTransferSyntax() {
+            const value = image.data.string('x00020010');
+            return value + ' [' + uid[value] + ']';
+        }
+        function getSopClass() {
+          const value = image.data.string('x00080016');
+          return value + ' [' + uid[value] + ']';
+      }
+      function getPixelRepresentation() {
+        const value = image.data.uint16('x00280103');
+        if(value === undefined) {
+            return;
+        }
+        return value + (value === 0 ? ' (unsigned)' : ' (signed)');
+    }
+    function getPlanarConfiguration() {
+      const value = image.data.uint16('x00280006');
+      if(value === undefined) {
+          return;
+      }
+      return value + (value === 0 ? ' (pixel)' : ' (plane)');
+  }
+
+        document.getElementById('transferSyntax').textContent = getTransferSyntax();
+        document.getElementById('sopClass').textContent=getSopClass();
+        document.getElementById('samplesPerPixel').textContent=image.data.uint16('x00280002');
+        document.getElementById('photometricInterpretation').textContent = image.data.string('x00280004');
+        document.getElementById('numberOfFrames').textContent = image.data.string('x00280008');
+        document.getElementById('planarConfiguration').textContent = getPlanarConfiguration();
+        document.getElementById('rows').textContent = image.data.uint16('x00280010');
+        document.getElementById('columns').textContent = image.data.uint16('x00280011');
+        // document.getElementById('pixelSpacing').textContent = image.data.string('x00280030');
+        // document.getElementById('rowPixelSpacing').textContent = image.rowPixelSpacing;
+        // document.getElementById('columnPixelSpacing').textContent = image.columnPixelSpacing;
+        // document.getElementById('bitsAllocated').textContent = image.data.uint16('x00280100');
+        // document.getElementById('bitsStored').textContent = image.data.uint16('x00280101');
+        // document.getElementById('highBit').textContent = image.data.uint16('x00280102');
+        // document.getElementById('pixelRepresentation').textContent = getPixelRepresentation();
+        // document.getElementById('windowCenter').textContent = image.data.string('x00281050');
+        document.getElementById('pixelSpacing').textContent = image.data.string('x00280030');
+        document.getElementById('rowPixelSpacing').textContent = image.rowPixelSpacing;
+        document.getElementById('columnPixelSpacing').textContent = image.columnPixelSpacing;
+        document.getElementById('bitsAllocated').textContent = image.data.uint16('x00280100');
+        document.getElementById('bitsStored').textContent = image.data.uint16('x00280101');
+        document.getElementById('highBit').textContent = image.data.uint16('x00280102');
+        document.getElementById('pixelRepresentation').textContent = getPixelRepresentation();
+        document.getElementById('windowCenter').textContent = image.data.string('x00281050');
+        document.getElementById('windowWidth').textContent = image.data.string('x00281051');
+        document.getElementById('rescaleIntercept').textContent = image.data.string('x00281052');
+        document.getElementById('rescaleSlope').textContent = image.data.string('x00281053');
+        document.getElementById('basicOffsetTable').textContent = image.data.elements.x7fe00010.basicOffsetTable ? image.data.elements.x7fe00010.basicOffsetTable.length : '';
+        document.getElementById('fragments').textContent = image.data.elements.x7fe00010.fragments ? image.data.elements.x7fe00010.fragments.length : '';
+        document.getElementById('minStoredPixelValue').textContent = image.minPixelValue;
+        document.getElementById('maxStoredPixelValue').textContent = image.maxPixelValue;
+        var end = new Date().getTime();
+        var time = end - start;
+        document.getElementById('totalTime').textContent = time + "ms";
+        document.getElementById('loadTime').textContent = image.loadTimeInMS + "ms";
+        document.getElementById('decodeTime').textContent = image.decodeTimeInMS + "ms";
+
+
       }, function(err) {
           throw err;
       });
@@ -197,30 +261,32 @@ const App = () => {
    </div>
       <div class = "info">
         
-      <span> Transfer Syntax: </span><br></br>
-      <span> SOP Class: </span><br></br>
-      <span> Samples Per Pixel:</span><br></br>
-      <span> Photometric Interpretation:</span><br></br>
-      <span> Number Of Frames:</span><br></br>
-      <span> Planar Configuration:</span><br></br>
-      <span> Rows: </span><br></br>
-      <span> Columns:</span><br></br>
-      <span> Pixels Spacing: </span><br></br>
-      <span> Column Pixel Spacing:</span><br></br>
-      <span> Bits Allocated:</span><br></br>
-      <span> Bits Stored: </span><br></br>
-      <span> High Bit: </span><br></br>
-      <span> Pixel Representation: </span><br></br>
-      <span> WindowCenter: </span><br></br>
-      <span> WindowWidth: </span><br></br>
-      <span> RescaleIntercept: </span><br></br>
-      <span> RescaleSlope:</span><br></br>
-      <span> Basic Offset Table Entries:</span><br></br>
-      <span>Fragments: </span><br></br>
-      <span>Max Stored Pixel Value: </span><br></br>
-      <span>Min Stored Pixel Value: </span><br></br>
-      <span>Total Time: </span><br></br>
-      <span>Decode Time: </span>
+      <span> Transfer Syntax: </span><span id= "transferSyntax"></span><br></br>
+      <span> SOP Class: </span><span id="sopClass"></span><br></br>
+      <span> Samples Per Pixel: </span><span id="samplesPerPixel"></span> <br></br>
+      <span> Photometric Interpretation: <span id="photometricInterpretation"></span></span><br></br>
+      <span> Number Of Frames: </span><span id ="numberOfFrames"></span><br></br>
+      <span> Planar Configuration:</span><span id = "planarConfiguration"></span><br></br>
+      <span> Rows: </span><span id = "rows"></span><br></br>
+      <span> Columns: </span><span id ="columns"></span><br></br>
+      <span>Pixel Spacing: </span><span id="pixelSpacing"></span><br></br>
+      <span>Row Pixel Spacing: </span><span id="rowPixelSpacing"></span><br></br>
+      <span>Column Pixel Spacing: </span><span id="columnPixelSpacing"></span><br></br>
+      <span>Bits Allocated: </span><span id="bitsAllocated"></span><br></br>
+      <span>Bits Stored: </span><span id="bitsStored"></span><br></br>
+      <span>High Bit: </span><span id="highBit"></span><br></br>
+      <span>Pixel Representation: </span><span id="pixelRepresentation"></span><br></br>
+      <span>WindowCenter: </span><span id="windowCenter"></span><br></br>
+      <span>WindowWidth: </span><span id="windowWidth"></span><br></br>
+      <span>RescaleIntercept: </span><span id="rescaleIntercept"></span><br></br>
+      <span>RescaleSlope: </span><span id="rescaleSlope"></span><br></br>
+      <span>Basic Offset Table Entries: </span><span id="basicOffsetTable"></span><br></br>
+      <span>Fragments: </span><span id="fragments"></span><br></br>
+      <span>Max Stored Pixel Value: </span><span id="minStoredPixelValue"></span><br></br>
+      <span>Min Stored Pixel Value: </span><span id="maxStoredPixelValue"></span><br></br>
+      <span>Total Time: </span><span id="totalTime"></span><br></br>
+      <span>Load Time: </span><span id="loadTime"></span><br></br>
+      <span>Decode Time: </span><span id="decodeTime"></span><br></br>
       </div>
        <div class="container">
        <h1>&nbsp;</h1>
