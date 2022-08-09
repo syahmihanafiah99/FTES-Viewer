@@ -45,18 +45,13 @@ cornerstoneTools.toolColors.setToolColor("rgb(255, 255, 0)");
 //Integrate with django coding
 
 window.onload = function() {
-  // downloadAndView("http://10.40.1.54/instances/af5c73c3-c1e230ee-ed806676-cfada2ac-a7b0021f/file");
-  downloadAndView("http://10.40.1.54/instances/a0ee2e67-a48cbb65-a9605522-1748da4c-8167f0dc/file");
+  downloadAndView("http://10.40.1.54/instances/af5c73c3-c1e230ee-ed806676-cfada2ac-a7b0021f/file");
+  // downloadAndView("http://10.40.1.54/instances/a0ee2e67-a48cbb65-a9605522-1748da4c-8167f0dc/file");
 };
 
-// cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
-// cornerstoneWADOImageLoader.configure({
-//   beforeSend: function(xhr) {
-//       // Add custom headers here (e.g. auth tokens)
-//       //xhr.setRequestHeader('APIKEY', 'my auth token');
-//   },
-// });
+
+
 
 // var loaded = false;
 
@@ -74,10 +69,11 @@ function loadAndViewImage(imageId) {
             const value = image.data.string('x00020010');
             return value + ' [' + uid[value] + ']';
         }
+
         function getSopClass() {
-          const value = image.data.string('x00080016');
-          return value + ' [' + uid[value] + ']';
-      }
+            const value = image.data.string('x00080016');
+            return value + ' [' + uid[value] + ']';
+        }
       function getPixelRepresentation() {
         const value = image.data.uint16('x00280103');
         if(value === undefined) {
@@ -85,12 +81,12 @@ function loadAndViewImage(imageId) {
         }
         return value + (value === 0 ? ' (unsigned)' : ' (signed)');
     }
-    function getPlanarConfiguration() {
-      const value = image.data.uint16('x00280006');
-      if(value === undefined) {
+      function getPlanarConfiguration() {
+       const value = image.data.uint16('x00280006');
+       if(value === undefined) {
           return;
-      }
-      return value + (value === 0 ? ' (pixel)' : ' (plane)');
+       }
+       return value + (value === 0 ? ' (pixel)' : ' (plane)');
   }
 
         document.getElementById('transferSyntax').textContent = getTransferSyntax();
@@ -101,14 +97,7 @@ function loadAndViewImage(imageId) {
         document.getElementById('planarConfiguration').textContent = getPlanarConfiguration();
         document.getElementById('rows').textContent = image.data.uint16('x00280010');
         document.getElementById('columns').textContent = image.data.uint16('x00280011');
-        // document.getElementById('pixelSpacing').textContent = image.data.string('x00280030');
-        // document.getElementById('rowPixelSpacing').textContent = image.rowPixelSpacing;
-        // document.getElementById('columnPixelSpacing').textContent = image.columnPixelSpacing;
-        // document.getElementById('bitsAllocated').textContent = image.data.uint16('x00280100');
-        // document.getElementById('bitsStored').textContent = image.data.uint16('x00280101');
-        // document.getElementById('highBit').textContent = image.data.uint16('x00280102');
-        // document.getElementById('pixelRepresentation').textContent = getPixelRepresentation();
-        // document.getElementById('windowCenter').textContent = image.data.string('x00281050');
+
         document.getElementById('pixelSpacing').textContent = image.data.string('x00280030');
         document.getElementById('rowPixelSpacing').textContent = image.rowPixelSpacing;
         document.getElementById('columnPixelSpacing').textContent = image.columnPixelSpacing;
@@ -151,20 +140,6 @@ function downloadAndView(downloadUrl) {
   loadAndViewImage(url);
 }
 
-// cornerstone.events.addEventListener('cornerstoneimageloadprogress', function(event) {
-//   const eventData = event.detail;
-//   const loadProgress = document.getElementById('loadProgress');
-//   loadProgress.textContent = `Image Load Progress: ${eventData.percentComplete}%`;
-// });
-
-// function getUrlWithoutFrame() {
-//   var url = document.getElementById('wadoURL').value;
-//   var frameIndex = url.indexOf('frame=');
-//   if(frameIndex !== -1) {
-//       url = url.substr(0, frameIndex-1);
-//   }
-//   return url;
-// }
 
 var element = document.getElementById('dicomImage');
 // cornerstone.enable(element);
